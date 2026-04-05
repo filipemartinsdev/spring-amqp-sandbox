@@ -29,13 +29,13 @@ This project is a sandbox for experimenting with Spring AMQP, which is a framewo
 
 AMQP means **Advanced Message Queuing Protocol**. It's the protocol behind RabbitMQ and all it architecture. 
 
-<img src="images/AMQP.png" height="400pt">
+<img src="images/AMQP.png" height="260pt">
 
 ### RabbitMQ communication
 
 The RabbitMQ works with **push** communication. The RabbitMQ push new messages to Spring, that receive, handle its, and return the confirmation (**ACK)** that its already consumes the message.
 
-<img src="images/rabbitMQ_communication.png" height="400pt">
+<img src="images/rabbitMQ_communication.png" height="260pt">
 
 ### AMQP message
 
@@ -47,4 +47,4 @@ The AMQP message have three parts:
 - **Body** <br>
     The payload.
 
-<img src="images/AMQP_message.png" height="400pt">
+<img src="images/AMQP_message.png" height="260pt">
