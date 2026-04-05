@@ -21,3 +21,30 @@ This project is a sandbox for experimenting with Spring AMQP, which is a framewo
     Microservice to handle simple user credentials registration.
 - **Users** <br>
     Microservice to manage users profiles.
+
+
+## How does it work?
+
+### AMQP
+
+AMQP means **Advanced Message Queuing Protocol**. It's the protocol behind RabbitMQ and all it architecture. 
+
+<img src="images/AMQP.png" height="400pt">
+
+### RabbitMQ communication
+
+The RabbitMQ works with **push** communication. The RabbitMQ push new messages to Spring, that receive, handle its, and return the confirmation (**ACK)** that its already consumes the message.
+
+<img src="images/rabbitMQ_communication.png" height="400pt">
+
+### AMQP message
+
+The AMQP message have three parts:
+- **Header** <br>
+    Custom attributes.
+- **Attributes** <br>
+    Message metadata.
+- **Body** <br>
+    The payload.
+
+<img src="images/AMQP_message.png" height="400pt">
