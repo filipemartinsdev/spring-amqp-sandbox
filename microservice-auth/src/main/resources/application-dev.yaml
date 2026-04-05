@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: ${PG_URL}
+    username: ${PG_USER}
+    password: ${PG_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+
+  rabbitmq:
+    addresses: ${AMQP_URL}
+
+  broker:
+    queues:
+      auth:
+        name: user_credentials
+      users:
+        name: user_profile

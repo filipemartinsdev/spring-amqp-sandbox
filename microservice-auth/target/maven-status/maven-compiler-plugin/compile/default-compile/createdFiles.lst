@@ -1,0 +1,10 @@
+com/ms/auth/infra/persistence/UserCredentialsRepository.class
+com/ms/auth/application/dto/UpdateUserCredentialsRequest.class
+com/ms/auth/services/UserCredentialsService.class
+com/ms/auth/AuthApplication.class
+com/ms/auth/application/dto/CreateUserRequest.class
+com/ms/auth/config/BrokerConfig.class
+com/ms/auth/infra/broker/RabbitMQProducer.class
+com/ms/auth/infra/web/AuthController.class
+com/ms/auth/application/dto/UserCredentialsDTO.class
+com/ms/auth/domain/UserCredentials.class
