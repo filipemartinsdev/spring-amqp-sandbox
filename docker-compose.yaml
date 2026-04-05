@@ -1,0 +1,52 @@
+services:
+  auth-service:
+    container_name: auth
+    build:
+      context: ./microservice-auth
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      AMQP_URL:
+      PG_HOST: auth_db
+      PG_USER: ${PG_AUTH_USER}
+      PG_PASSWORD: ${PG_AUTH_PASSWORD}
+      PG_DB: ${PG_AUTH_DB}
+    depends_on:
+      - auth_db
+
+  users-service:
+    container_name: users
+    build:
+      context: ./microservice-users
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    environment:
+      AMQP_URL:
+      PG_HOST: users_db
+      PG_USER: ${PG_USERS_USER}
+      PG_PASSWORD: ${PG_USERS_PASSWORD}
+      PG_DB: ${PG_USERS_DB}
+    depends_on:
+      - users_db
+
+  auth_db:
+    container_name: auth_db
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: ${PG_AUTH_USER}
+      POSTGRES_PASSWORD: ${PG_AUTH_PASSWORD}
+      POSTGRES_DB: ${PG_AUTH_DB}
+    ports:
+      - "5432:5432"
+
+  users_db:
+    container_name: users_db
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: ${PG_USERS_USER}
+      POSTGRES_PASSWORD: ${PG_USERS_PASSWORD}
+      POSTGRES_DB: ${PG_USERS_DB}
+    ports:
+      - "5433:5432"
