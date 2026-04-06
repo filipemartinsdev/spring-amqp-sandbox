@@ -4,6 +4,7 @@ services:
     build:
       context: ./microservice-auth
       dockerfile: Dockerfile
+    restart: unless-stopped
     ports:
       - "8080:8080"
     env_file:
@@ -17,12 +18,14 @@ services:
       PG_URL: jdbc:postgresql://auth_db:5432/${PG_DB}
     depends_on:
       - auth_db
+      - rabbitmq
 
   users-service:
     container_name: users
     build:
       context: ./microservice-users
       dockerfile: Dockerfile
+    restart: unless-stopped
     ports:
       - "8081:8081"
     env_file:
@@ -36,6 +39,7 @@ services:
       PG_URL: jdbc:postgresql://users_db:5433/${PG_DB}
     depends_on:
       - users_db
+      - rabbitmq
 
   auth_db:
     container_name: auth_db
@@ -65,6 +69,20 @@ services:
       - "5433:5433"
     volumes:
       - users_db_data:/var/lib/postgresql/data
+
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:4-management-alpine
+    hostname: rabbitmq-local
+    env_file:
+      - .env
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
 volumes:
   auth_db_data:
   users_db_data:
+  rabbitmq_data:

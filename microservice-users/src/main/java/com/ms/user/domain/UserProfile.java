@@ -28,6 +28,6 @@ public class UserProfile {
     @Email
     public String email;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     public String bio;
 }
