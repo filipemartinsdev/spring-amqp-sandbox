@@ -2,7 +2,7 @@ package com.ms.auth.services;
 
 import com.ms.auth.application.dto.CreateUserRequest;
 import com.ms.auth.application.dto.UpdateUserCredentialsRequest;
-import com.ms.auth.application.dto.UserCredentialsDTO;
+import com.ms.auth.application.message.UserCredentialsMessage;
 import com.ms.auth.domain.UserCredentials;
 import com.ms.auth.infra.broker.RabbitMQProducer;
 import com.ms.auth.infra.persistence.UserCredentialsRepository;
@@ -32,19 +32,19 @@ public class UserCredentialsService {
 
         var createdUser = userCredentialsRepository.save(newUser);
 
-        UserCredentialsDTO userCredentialsDTO = new UserCredentialsDTO(
+        UserCredentialsMessage message = new UserCredentialsMessage(
                 createdUser.getId(),
                 createdUser.getUsername(),
                 createdUser.getEmail()
         );
 
-        rabbitMQProducer.publishUserCredentialsCreated(userCredentialsDTO);
+        rabbitMQProducer.publishUserCredentialsCreated(message);
     }
 
-    public List<UserCredentialsDTO> getAll() {
+    public List<UserCredentialsMessage> getAll() {
         return userCredentialsRepository.findAll().stream()
                 .map(userCredentials ->
-                    new UserCredentialsDTO(
+                    new UserCredentialsMessage(
                             userCredentials.getId(),
                             userCredentials.getUsername(),
                             userCredentials.getEmail()
@@ -53,7 +53,7 @@ public class UserCredentialsService {
                 .toList();
     }
 
-    public UserCredentialsDTO update(UUID userId, @Valid UpdateUserCredentialsRequest request) {
+    public UserCredentialsMessage update(UUID userId, @Valid UpdateUserCredentialsRequest request) {
         var userCredentials = userCredentialsRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
@@ -67,7 +67,7 @@ public class UserCredentialsService {
 
         var newUserCredentials = userCredentialsRepository.save(userCredentials);
 
-        var response = new UserCredentialsDTO(
+        var response = new UserCredentialsMessage(
                 newUserCredentials.getId(),
                 newUserCredentials.getUsername(),
                 newUserCredentials.getEmail()

@@ -2,10 +2,9 @@ package com.ms.auth.infra.web;
 
 import com.ms.auth.application.dto.CreateUserRequest;
 import com.ms.auth.application.dto.UpdateUserCredentialsRequest;
-import com.ms.auth.application.dto.UserCredentialsDTO;
+import com.ms.auth.application.message.UserCredentialsMessage;
 import com.ms.auth.services.UserCredentialsService;
 import jakarta.validation.Valid;
-import org.apache.catalina.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,14 +31,14 @@ public class AuthController {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<List<UserCredentialsDTO>> getUsers() {
+    public ResponseEntity<List<UserCredentialsMessage>> getUsers() {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(userCredentialsService.getAll());
     }
 
     @PatchMapping("/users/{userId}")
-    public ResponseEntity<UserCredentialsDTO> update(
+    public ResponseEntity<UserCredentialsMessage> update(
             @PathVariable UUID userId,
             @Valid @RequestBody UpdateUserCredentialsRequest request
     ){

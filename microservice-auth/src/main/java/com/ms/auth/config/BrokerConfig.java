@@ -1,35 +1,34 @@
 package com.ms.auth.config;
 
-import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.*;
+import org.springframework.amqp.support.converter.JacksonJsonMessageConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Configuration
 public class BrokerConfig {
-    @Value("${broker.queues.userCreated.name}")
-    private String userCreatedQueueName;
+    @Value("${broker.exchanges.userCreated.name}")
+    private String userCreatedExchangeName;
 
-    @Value("${broker.queues.userUpdated.name}")
-    private String userUpdatedQueueName;
+    @Value("${broker.exchanges.userUpdated.name}")
+    private String userUpdatedExchangeName;
 
     @Bean
-    public Queue userCreatedQueue() {
-        return new Queue(userCreatedQueueName, true);
+    public FanoutExchange userCreatedExchange() {
+        return new FanoutExchange(userCreatedExchangeName, true, false);
     }
 
     @Bean
-    public Queue userUpdatedQueue() {
-        return new Queue(userUpdatedQueueName, true);
+    public FanoutExchange userUpdatedExchange() {
+        return new FanoutExchange(userUpdatedExchangeName, true, false);
     }
 
     @Bean
-    public Jackson2JsonMessageConverter messageConverter() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return new Jackson2JsonMessageConverter(objectMapper);
+    public JacksonJsonMessageConverter messageConverter() {
+        return new JacksonJsonMessageConverter();
     }
 }
 

@@ -11,8 +11,8 @@ spring:
         all: true
 
 broker:
-  queues:
+  exchanges:
     userCreated:
-      name: user_credentials_created
+      name: user.created.fanout
     userUpdated:
-      name: user_credentials_updated
+      name: user.updated.fanout

@@ -15,7 +15,7 @@ public class RabbitMQListener {
     }
 
     @RabbitListener(
-            queues = "${broker.queues.userCreated.name}"
+            queues = "${broker.queues.createUser.name}"
     )
     public void consumeUserCreated(UserCredentialsDTO userCredentialsDTO) {
         try {
@@ -26,7 +26,7 @@ public class RabbitMQListener {
     }
 
     @RabbitListener(
-            queues = "${broker.queues.userUpdated.name}"
+            queues = "${broker.queues.updateUser.name}"
     )
     public void consumeUserUpdated(UserCredentialsDTO userCredentialsDTO) {
         try {

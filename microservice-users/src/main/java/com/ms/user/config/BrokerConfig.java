@@ -1,33 +1,59 @@
 package com.ms.user.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.amqp.core.*;
+import org.springframework.amqp.support.converter.JacksonJsonMessageConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class BrokerConfig {
-    @Value("${broker.queues.userCreated.name}")
-    private String userCreatedQueueName;
+    @Value("${broker.queues.createUser.name}")
+    private String createUserProfileQueueName;
 
-    @Value("${broker.queues.userUpdated.name}")
-    private String userUpdatedQueueName;
+    @Value("${broker.queues.updateUser.name}")
+    private String updateUserProfileQueueName;
+
+    @Value("${broker.exchanges.userCreated.name}")
+    private String userCreatedExchangeName;
+
+    @Value("${broker.exchanges.userUpdated.name}")
+    private String userUpdatedExchangeName;
+
 
     @Bean
-    public Queue userCreatedQueue() {
-        return new Queue(userCreatedQueueName, true);
+    public Queue createUserProfileQueue() {
+        return new Queue(createUserProfileQueueName, true);
     }
 
     @Bean
-    public Queue userUpdatedQueue() {
-        return new Queue(userUpdatedQueueName, true);
+    public Queue updateUserProfileQueue() {
+        return new Queue(updateUserProfileQueueName, true);
     }
 
     @Bean
-    public Jackson2JsonMessageConverter messageConverter() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return new Jackson2JsonMessageConverter(objectMapper);
+    public FanoutExchange userCreatedExchange() {
+        return new FanoutExchange(userCreatedExchangeName, true, false);
+    }
+
+    @Bean
+    public FanoutExchange userUpdatedExchange() {
+        return new FanoutExchange(userUpdatedExchangeName, true, false);
+    }
+
+    @Bean
+    public Binding userCreatedBiding(FanoutExchange userCreatedExchange, Queue createUserProfileQueue) {
+        return BindingBuilder.bind(createUserProfileQueue).to(userCreatedExchange);
+    }
+
+    @Bean
+    public Binding userUpdatedBiding(FanoutExchange userUpdatedExchange, Queue updateUserProfileQueue) {
+        return BindingBuilder.bind(updateUserProfileQueue).to(userUpdatedExchange);
+    }
+
+    @Bean
+    public JacksonJsonMessageConverter messageConverter() {
+        return new JacksonJsonMessageConverter();
     }
 }
