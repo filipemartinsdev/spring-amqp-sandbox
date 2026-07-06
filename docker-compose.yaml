@@ -12,13 +12,15 @@ services:
     environment:
       ACTIVE_PROFILE:
       AMQP_URL:
-      PG_USER: ${PG_AUTH_USER}
-      PG_PASSWORD: ${PG_AUTH_PASSWORD}
+      PG_USER: ${PG_AUTH_USER:-postgres}
+      PG_PASSWORD: ${PG_AUTH_PASSWORD:-postgres}
       PG_DB: ${PG_AUTH_DB}
-      PG_URL: jdbc:postgresql://auth_db:5432/${PG_DB}
+      PG_URL: jdbc:postgresql://auth_db:5432/${PG_DB:-postgres}
     depends_on:
-      - auth_db
-      - rabbitmq
+      auth_db:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
 
   users-service:
     container_name: users
@@ -33,21 +35,23 @@ services:
     environment:
       ACTIVE_PROFILE:
       AMQP_URL:
-      PG_USER: ${PG_USERS_USER}
-      PG_PASSWORD: ${PG_USERS_PASSWORD}
-      PG_DB: ${PG_USERS_DB}
-      PG_URL: jdbc:postgresql://users_db:5433/${PG_DB}
+      PG_USER: ${PG_USERS_USER:-postgres}
+      PG_PASSWORD: ${PG_USERS_PASSWORD:-postgres}
+      PG_DB: ${PG_USERS_DB:-postgres}
+      PG_URL: jdbc:postgresql://users_db:5433/${PG_DB:-postgres}
     depends_on:
-      - users_db
-      - rabbitmq
+      users_db:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
 
   auth_db:
     container_name: auth_db
     image: postgres:17-alpine
     environment:
-      POSTGRES_USER: ${PG_AUTH_USER}
-      POSTGRES_PASSWORD: ${PG_AUTH_PASSWORD}
-      POSTGRES_DB: ${PG_AUTH_DB}
+      POSTGRES_USER: ${PG_AUTH_USER:-postgres}
+      POSTGRES_PASSWORD: ${PG_AUTH_PASSWORD:-postgres}
+      POSTGRES_DB: ${PG_AUTH_DB:-postgres}
     env_file:
       - .env
     ports:
@@ -60,9 +64,9 @@ services:
     image: postgres:17-alpine
     command: -p 5433
     environment:
-      POSTGRES_USER: ${PG_USERS_USER}
-      POSTGRES_PASSWORD: ${PG_USERS_PASSWORD}
-      POSTGRES_DB: ${PG_USERS_DB}
+      POSTGRES_USER: ${PG_USERS_USER:-postgres}
+      POSTGRES_PASSWORD: ${PG_USERS_PASSWORD:-postgres}
+      POSTGRES_DB: ${PG_USERS_DB:-postgres}
     env_file:
       - .env
     ports:
