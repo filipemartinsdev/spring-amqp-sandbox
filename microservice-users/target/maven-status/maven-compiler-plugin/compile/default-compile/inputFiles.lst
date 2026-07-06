@@ -1,9 +1,0 @@
-/home/filipe/dev/personal/tests/spring/spring-amqp-sandbox/microservice-users/src/main/java/com/ms/user/UserApplication.java
-/home/filipe/dev/personal/tests/spring/spring-amqp-sandbox/microservice-users/src/main/java/com/ms/user/application/dto/UserCredentialsDTO.java
-/home/filipe/dev/personal/tests/spring/spring-amqp-sandbox/microservice-users/src/main/java/com/ms/user/application/dto/UserProfileResponse.java
-/home/filipe/dev/personal/tests/spring/spring-amqp-sandbox/microservice-users/src/main/java/com/ms/user/config/BrokerConfig.java
-/home/filipe/dev/personal/tests/spring/spring-amqp-sandbox/microservice-users/src/main/java/com/ms/user/domain/UserProfile.java
-/home/filipe/dev/personal/tests/spring/spring-amqp-sandbox/microservice-users/src/main/java/com/ms/user/infra/broker/RabbitMQListener.java
-/home/filipe/dev/personal/tests/spring/spring-amqp-sandbox/microservice-users/src/main/java/com/ms/user/infra/persistence/UserProfileRepository.java
-/home/filipe/dev/personal/tests/spring/spring-amqp-sandbox/microservice-users/src/main/java/com/ms/user/infra/web/UserProfileController.java
-/home/filipe/dev/personal/tests/spring/spring-amqp-sandbox/microservice-users/src/main/java/com/ms/user/services/UserProfileService.java

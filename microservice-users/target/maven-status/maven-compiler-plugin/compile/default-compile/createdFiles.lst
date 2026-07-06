@@ -1,9 +1,0 @@
-com/ms/user/config/BrokerConfig.class
-com/ms/user/application/dto/UserCredentialsDTO.class
-com/ms/user/application/dto/UserProfileResponse.class
-com/ms/user/domain/UserProfile.class
-com/ms/user/UserApplication.class
-com/ms/user/services/UserProfileService.class
-com/ms/user/infra/web/UserProfileController.class
-com/ms/user/infra/broker/RabbitMQListener.class
-com/ms/user/infra/persistence/UserProfileRepository.class
